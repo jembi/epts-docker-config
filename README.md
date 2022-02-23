@@ -14,7 +14,7 @@ The folder structure is as follows:
 |       ...
 |   ├── v2                             		# OpenMRS v2.3.3
 │       ├── ariel
-|           ├── {ariel-v2-dump-file.sql}    # Download 2.x database dumps find link below
+|           ├── {ariel-v2-dump-file.sql}     # Download 2.x database dumps find link below
 │       ├── ccs
 |           ├── {ccs-v2-dump-file.sql}
 |       ...
