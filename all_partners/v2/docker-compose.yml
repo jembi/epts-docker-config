@@ -39,24 +39,6 @@ volumes:
   icap-v2-runtime-props:
 
 services:
-
-  home-app:
-    container_name: home-app
-    #image: 'bitnami/apache:latest'
-    image: 'httpd:alpine'
-    ports:
-      - "8000:8080"
-    networks:
-      - all_partners_nginx
-    volumes:
-      - ./home/index.html:/var/www/index.html
-      - ./home/style.css:/var/www/style.css
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
-      interval: 2s
-      timeout: 30s
-      retries: 15
-
 ####################################### ariel-v2 #######################################
   ariel-v2-db:
     container_name: ariel-v2-db
