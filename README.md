@@ -30,7 +30,7 @@ The folder structure is as follows:
 │       ├── OpenMRS
 |           ├── modules                 	# Download 1.x modules find link below
 │       ├── webapps
-|           ├── ariel.war               	# Download 1.x war file and rename it to partner's name. Find the link below
+|           ├── ariel.war               	# Download 1.x war file and rename it to partner's name
 |       └── ariel-runtime.properties
 │   ├── ccs
 |   ...
