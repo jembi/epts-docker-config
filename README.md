@@ -39,7 +39,7 @@ The folder structure is as follows:
 │   ├── docker-compose.yml              	# File to define the services and networks needed under OpenMRS v2.3.3
 │   ├── ariel                           	# Ariel files
 │       ├── OpenMRS
-|           ├── modules                 	# Download 2.x modules from [this link](https://drive.google.com/drive/folders/1-lK_cA3NiXZIkkwg6OWmXKobyfISlEeH)
+|           ├── modules                 	# Download 2.x modules from [this link](www.google.com)
 │       ├── webapps
 |           ├── ariel.war               	# Download 2.x [war file here](https://drive.google.com/drive/folders/1Q0gN17FcohcgQMPc5sORdNuKwEdhZg3S) and rename it to partners name
 |       └── ariel-v2-runtime.properties
