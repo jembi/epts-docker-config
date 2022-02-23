@@ -1,4 +1,4 @@
-# EPTS docker configurations with nginx reverse proxy (all partners)
+# EPTS docker configuration with nginx reverse proxy (all partners)
 
 This repository provides information on how to configure multiple OpenMRS versions 2.3.3 and 1.11.7 instances alongside using non-related docker compose files and publish them through nginx reverse proxy.
 
