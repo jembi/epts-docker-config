@@ -3,7 +3,7 @@
 This repository provides information on how to configure multiple OpenMRS versions 2.3.3 and 1.11.7 instances alongside using non-related docker compose files and publish them through nginx reverse proxy.
 
 The folder structure is as follows:
-
+```
 .
 ├── dump
 |   ├── v1                              	# OpenMRS v1.11.7
@@ -46,7 +46,7 @@ The folder structure is as follows:
 │   ├── ccs                             	# CCS  files
 |   ...
 .
-
+```
 # Initial configuration
 
 1. Clone the repo
