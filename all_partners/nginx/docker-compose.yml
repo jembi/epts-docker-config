@@ -1,0 +1,16 @@
+version: "3.9"
+
+networks:
+  nginx:
+
+services:
+  nginx-proxy:
+    container_name: nginx-proxy
+    image:  nginx
+    ports:
+      - "80:80"
+    networks:
+      - nginx
+    volumes:
+      - ./openmrs-reverse-proxy.conf:/etc/nginx/conf.d/openmrs-reverse-proxy.conf
+      - ./empty.conf:/etc/nginx/conf.d/default.conf

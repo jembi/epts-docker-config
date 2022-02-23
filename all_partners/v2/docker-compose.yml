@@ -1,0 +1,410 @@
+version: "3.9"
+
+networks:
+  all_partners_nginx:
+    external: true
+  ariel-v2:
+    driver: bridge
+  ccs-v2:
+    driver: bridge
+  jhpiego-v2:
+    driver: bridge
+  egpaf-v2:
+    driver: bridge
+  fgh-v2:
+    driver: bridge
+  fgh2-v2:
+    driver: bridge
+  fgh3-v2:
+    driver: bridge
+  icap-v2:
+    driver: bridge
+
+volumes:
+  ariel-v2-data:
+  ariel-v2-runtime-props:
+  ccs-v2-data:
+  ccs-v2-runtime-props:
+  egpaf-v2-data:
+  egpaf-v2-runtime-props:
+  jhpiego-v2-data:
+  jhpiego-v2-runtime-props:
+  fgh-v2-data:
+  fgh-v2-runtime-props:
+  fgh2-v2-data:
+  fgh2-v2-runtime-props:
+  fgh3-v2-data:
+  fgh3-v2-runtime-props:
+  icap-v2-data:
+  icap-v2-runtime-props:
+
+services:
+
+  home-app:
+    container_name: home-app
+    #image: 'bitnami/apache:latest'
+    image: 'httpd:alpine'
+    ports:
+      - "8000:8080"
+    networks:
+      - all_partners_nginx
+    volumes:
+      - ./home/index.html:/var/www/index.html
+      - ./home/style.css:/var/www/style.css
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### ariel-v2 #######################################
+  ariel-v2-db:
+    container_name: ariel-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3320:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - ariel-v2
+      - all_partners_nginx
+    volumes:
+      - ariel-v2-data:/var/lib/mysql
+      - ../dump/ariel:/docker-entrypoint-initdb.d
+
+  ariel-v2-app:         
+    container_name: ariel-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/ariel-v2-runtime.properties"      
+    ports:
+      - "8020:8080"
+    networks:
+      - ariel-v2
+      - all_partners_nginx
+    depends_on:
+      - "ariel-v2-db"
+    volumes:
+      - ./ariel/webapps/ariel-v2.war:/usr/local/tomcat/webapps/ariel-v2.war
+      - ./ariel/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./ariel/ariel-v2-runtime.properties:/usr/local/tomcat/ariel-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### ccs-v2 #######################################
+  ccs-v2-db:
+    container_name: ccs-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3321:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - ccs-v2
+      - all_partners_nginx
+    volumes:
+      - ccs-v2-data:/var/lib/mysql
+      - ../dump/ccs:/docker-entrypoint-initdb.d
+
+  ccs-v2-app:         
+    container_name: ccs-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/ccs-v2-runtime.properties"      
+    ports:
+      - "8021:8080"
+    networks:
+      - ccs-v2
+      - all_partners_nginx
+    depends_on:
+      - "ccs-v2-db"
+    volumes:
+      - ./ccs/webapps/ccs-v2.war:/usr/local/tomcat/webapps/ccs-v2.war
+      - ./ccs/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./ccs/ccs-v2-runtime.properties:/usr/local/tomcat/ccs-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### jhpiego-v2 #######################################
+  jhpiego-v2-db:
+    container_name: jhpiego-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3329:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - jhpiego-v2
+      - all_partners_nginx
+    volumes:
+      - jhpiego-v2-data:/var/lib/mysql
+      - ../dump/jhpiego:/docker-entrypoint-initdb.d
+
+  jhpiego-v2-app:         
+    container_name: jhpiego-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/jhpiego-v2-runtime.properties"      
+    ports:
+      - "8029:8080"
+    networks:
+      - jhpiego-v2
+      - all_partners_nginx
+    depends_on:
+      - "jhpiego-v2-db"
+    volumes:
+      - ./jhpiego/webapps/jhpiego-v2.war:/usr/local/tomcat/webapps/jhpiego-v2.war
+      - ./jhpiego/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./jhpiego/jhpiego-v2-runtime.properties:/usr/local/tomcat/jhpiego-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### egpaf-v2 #######################################
+  egpaf-v2-db:
+    container_name: egpaf-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3322:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - egpaf-v2
+      - all_partners_nginx
+    volumes:
+      - egpaf-v2-data:/var/lib/mysql
+      - ../dump/egpaf:/docker-entrypoint-initdb.d
+
+  egpaf-v2-app:         
+    container_name: egpaf-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/egpaf-v2-runtime.properties"      
+    ports:
+      - "8022:8080"
+    networks:
+      - egpaf-v2
+      - all_partners_nginx
+    depends_on:
+      - "egpaf-v2-db"
+    volumes:
+      - ./egpaf/webapps/egpaf-v2.war:/usr/local/tomcat/webapps/egpaf-v2.war
+      - ./egpaf/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./egpaf/egpaf-v2-runtime.properties:/usr/local/tomcat/egpaf-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### fgh-v2 #######################################
+  fgh-v2-db:
+    container_name: fgh-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3324:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - fgh-v2
+      - all_partners_nginx
+    volumes:
+      - fgh-v2-data:/var/lib/mysql
+      - ../dump/fgh:/docker-entrypoint-initdb.d
+
+  fgh-v2-app:         
+    container_name: fgh-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/fgh-v2-runtime.properties"      
+    ports:
+      - "8024:8080"
+    networks:
+      - fgh-v2
+      - all_partners_nginx
+    depends_on:
+      - "fgh-v2-db"
+    volumes:
+      - ./fgh/webapps/fgh-v2.war:/usr/local/tomcat/webapps/fgh-v2.war
+      - ./fgh/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./fgh/fgh-v2-runtime.properties:/usr/local/tomcat/fgh-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+    
+####################################### fgh2-v2 #######################################
+  fgh2-v2-db:
+    container_name: fgh2-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3326:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - fgh2-v2
+      - all_partners_nginx
+    volumes:
+      - fgh2-v2-data:/var/lib/mysql
+      - ../dump/fgh:/docker-entrypoint-initdb.d
+
+  fgh2-v2-app:         
+    container_name: fgh2-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/fgh2-v2-runtime.properties"      
+    ports:
+      - "8026:8080"
+    networks:
+      - fgh2-v2
+      - all_partners_nginx
+    depends_on:
+      - "fgh2-v2-db"
+    volumes:
+      - ./fgh2/webapps/fgh2-v2.war:/usr/local/tomcat/webapps/fgh2-v2.war
+      - ./fgh2/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./fgh2/fgh2-v2-runtime.properties:/usr/local/tomcat/fgh2-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### fgh3-v2 #######################################
+  fgh3-v2-db:
+    container_name: fgh3-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3327:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - fgh3-v2
+      - all_partners_nginx
+    volumes:
+      - fgh3-v2-data:/var/lib/mysql
+      - ../dump/fgh:/docker-entrypoint-initdb.d
+
+  fgh3-v2-app:         
+    container_name: fgh3-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/fgh3-v2-runtime.properties"      
+    ports:
+      - "8027:8080"
+    networks:
+      - fgh3-v2
+      - all_partners_nginx
+    depends_on:
+      - "fgh3-v2-db"
+    volumes:
+      - ./fgh3/webapps/fgh3-v2.war:/usr/local/tomcat/webapps/fgh3-v2.war
+      - ./fgh3/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./fgh3/fgh3-v2-runtime.properties:/usr/local/tomcat/fgh3-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
+
+####################################### icap-v2 #######################################
+  icap-v2-db:
+    container_name: icap-v2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "eSaude1234"
+      MYSQL_DATABASE: "openmrs"
+      MYSQL_USER: "openmrs"
+      MYSQL_PASSWORD: "openmrs"
+    ports:
+      - "3328:3306"
+    command:               
+      --max_allowed_packet=404857600
+      --innodb-log-file-size=1G
+    networks:
+      - icap-v2
+      - all_partners_nginx
+    volumes:
+      - icap-v2-data:/var/lib/mysql
+      - ../dump/icap:/docker-entrypoint-initdb.d
+
+  icap-v2-app:         
+    container_name: icap-v2-app
+    image: tomcat:8-jre8-temurin
+    environment:
+      JAVA_OPTS: "-Dfile.encoding=UTF-8 -server -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx8G -Xms8G -XX:MaxPermSize=8G -XX:+UseConcMarkSweepGC -Duser.timezone=Africa/Maputo"
+      OPENMRS_RUNTIME_PROPERTIES_FILE: "/usr/local/tomcat/icap-v2-runtime.properties"      
+    ports:
+      - "8028:8080"
+    networks:
+      - icap-v2
+      - all_partners_nginx
+    depends_on:
+      - "icap-v2-db"
+    volumes:
+      - ./icap/webapps/icap-v2.war:/usr/local/tomcat/webapps/icap-v2.war
+      - ./icap/OpenMRS:/usr/local/tomcat/.OpenMRS
+      - ./icap/icap-v2-runtime.properties:/usr/local/tomcat/icap-v2-runtime.properties
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 30s
+      retries: 15
