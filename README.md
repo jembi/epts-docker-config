@@ -61,8 +61,8 @@ git clone https://github.com/jembi/epts-docker-config
 Get Docker: https://docs.docker.com/get-docker/
 Install Docker Compose: https://docs.docker.com/compose/install/
 ```
-3. 1.x database dumps are in [this link](https://drive.google.com/drive/folders/1FnYHrrx0RC7pSyiH4bL1Idyq8xUqX3cC)
-4. 2.x database dumps are in [this link](https://drive.google.com/drive/folders/1NcEwWuK1L3-sGitbrRpUe7W1sN_isASl)
+3. Download 1.x database dumps are in [this link](https://drive.google.com/drive/folders/1FnYHrrx0RC7pSyiH4bL1Idyq8xUqX3cC)
+4. Download 2.x database dumps are in [this link](https://drive.google.com/drive/folders/1NcEwWuK1L3-sGitbrRpUe7W1sN_isASl)
 5. Download 1.x modules from [this link](https://drive.google.com/drive/folders/1PgDwI6URrWeKfT0Sv7cd3JUaIF1nck0y)
 6. Download 2.x modules from [this link](https://drive.google.com/drive/folders/1-lK_cA3NiXZIkkwg6OWmXKobyfISlEeH)
 7. Download 1.x [war file here](https://drive.google.com/drive/folders/1yFkg5Q5pU116fK7GUkPUU5WblJkrMqjK/) and rename it to partner's name
