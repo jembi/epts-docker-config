@@ -48,6 +48,8 @@ The folder structure is as follows:
 .
 ```
 # Initial configuration
+The following steps will guide you through the process of installing the all the technology you need to use the docker configurations available in this project.
+
 1. Install Docker via terminal ```curl https://get.docker.com/ | sh -``` or install Docker using the link below, follow all the steps and most importantly, ensure that there is no previous docker installed while following these instructions.
 2. Install Docker Compose, follow all the steps here and use the recommend example version which is the latest stable release.
 3. Install Git ```sudo apt install git```
