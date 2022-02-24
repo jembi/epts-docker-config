@@ -25,23 +25,23 @@ The folder structure is as follows:
 |   └── openmrs-reverse-proxy.conf      	# File with all proxy rules that goes to /etc/nginx/conf.d/
 │
 ├── v1                                  	# OpenMRS v1.11.7 configuration files
-│   ├── docker-compose.yml              	# File to define the services and networks needed under OpenMRS v1.11.7
+│   ├── docker-compose.yml              	
 │   ├── ariel                           	# Ariel files
 │       ├── OpenMRS
-|           ├── modules                 	# Download 1.x modules find link below
+|           ├── modules                 	# Folder for 1.x modules
 │       ├── webapps
-|           ├── ariel.war               	# Download 1.x war file and rename it to partner's name
+|           ├── ariel.war               	# 1.x war file
 |       └── ariel-runtime.properties
 │   ├── ccs
 |   ...
 │
 ├── v2                                  	# OpenMRS v2.3.3 configuration files
-│   ├── docker-compose.yml              	# File to define the services and networks needed under OpenMRS v2.3.3
+│   ├── docker-compose.yml
 │   ├── ariel                           	# Ariel files
 │       ├── OpenMRS
-|           ├── modules                 	# Download 2.x modules find link below
+|           ├── modules                 	# Folder for 2.x modules
 │       ├── webapps
-|           ├── ariel.war               	# Download 2.x war file and rename it to partner's name
+|           ├── ariel.war               	# 2.x war file
 |       └── ariel-v2-runtime.properties
 │   ├── ccs                             	# CCS  files
 |   ...
