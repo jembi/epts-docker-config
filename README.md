@@ -48,13 +48,12 @@ The folder structure is as follows:
 .
 ```
 # Initial configuration
-The following steps will guide you through the process of installing the all the technology you need to use the docker configurations available in this project.
+The following steps will guide you through the process of installing all the technology you need to use the docker configurations available in this project.
 
 1. Install Docker via terminal ```curl https://get.docker.com/ | sh -``` or install Docker using the link below, follow all the steps and most importantly, ensure that there is no previous docker installed while following these instructions.
 2. Install Docker Compose, follow all the steps here and use the recommend example version which is the latest stable release.
 3. Install Git ```sudo apt install git```
-4. Clone the repository for setting up a docker image
-5. Clone the repo ```git clone https://github.com/jembi/epts-docker-config.git```
+4. Clone the repository for setting up a docker image ```git clone https://github.com/jembi/epts-docker-config.git```
 6. Download 1.x database dumps are in [this link](https://drive.google.com/drive/folders/1FnYHrrx0RC7pSyiH4bL1Idyq8xUqX3cC)
 7. Download 2.x database dumps are in [this link](https://drive.google.com/drive/folders/1NcEwWuK1L3-sGitbrRpUe7W1sN_isASl)
 8. Download 1.x modules from [this link](https://drive.google.com/drive/folders/1PgDwI6URrWeKfT0Sv7cd3JUaIF1nck0y)
@@ -62,7 +61,7 @@ The following steps will guide you through the process of installing the all the
 10. Download 1.x [war file here](https://drive.google.com/drive/folders/1yFkg5Q5pU116fK7GUkPUU5WblJkrMqjK/) and rename it to partner's name
 11. Download 2.x [war file here](https://drive.google.com/drive/folders/1Q0gN17FcohcgQMPc5sORdNuKwEdhZg3S/) and rename it to partner's name
 12. Download the [runtime.properties file here](https://drive.google.com/drive/folders/1t0CbpwaZiTLarnYmeA-uwYRPjem3wH7f)
-13. Switch to the dump folder and head to the desired partner folder. Copy and paste the corresponding dump file into the chosen partner folder where you at.
+13. Navigate into the dump folder and head to the desired partner folder. Copy and paste the corresponding dump file into the chosen partner folder where you at.
 14. In the `nginx` folder, you'll find a `docker-compose.yml` file with only one service for the nginx server to be independent from the other (v1 and v2 folders) compose files. This file defines a new container for nginx and it also does the overriding of the nginx's configuration files.
 15. Now switch to the folder of the corresponding OpenMRS version you'd like to configure an instance, i.e. if you are willing to setup an OpenMRS 1.x instance go to folder `v1` else if you are willing to setup an OpenMRS 2.x go to folder `v2`.
 16. In the folders v1 and v2 you'll find a `docker-compose.yml` file with the container definitions for the partners instances. Here you can add new resources to the already configured containers or add new containers as you need.
