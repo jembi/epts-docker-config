@@ -69,8 +69,10 @@ The following steps will guide you through the process of installing all the tec
 
 `Tip1`: After downloading a war file, remember to rename it to the corresponding partner name. Ex: fgh.war
 
-`Tip2`: After downloading the openmrs-runtime.properties file, remember to change the connection.url to point to the host and port that you defined in you yml file.
+`Tip2`: After downloading the openmrs-runtime.properties file, remember to rename it to the corresponding partner name. Ex: fgh-runtime.properties
 
-`Tip3`: For reverse proxy, remember to put v1 and v2 instances in the same docker network as nginx.
+`Tip3`: After downloading the openmrs-runtime.properties file, remember to change the connection.url to point to the host and port that you defined in you yml file.
 
-`Tip4`: Always start your containers first and then start the nginx container, in order to make the instances visible to the nginx proxy.
+`Tip4`: For reverse proxy, remember to put v1 and v2 instances in the same docker network as nginx.
+
+`Tip5`: Always start your containers first and then start the nginx container, in order to make the instances visible to the nginx proxy.
