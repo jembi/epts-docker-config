@@ -48,7 +48,7 @@ The folder structure is as follows:
 .
 ```
 # Initial configuration
-1. Install Docker via terminal ```curl https://get.docker.com/ | sh -``` Or install Docker using the link below, follow all the steps and most importantly, ensure that there is no previous docker installed while following these instructions.
+1. Install Docker via terminal ```curl https://get.docker.com/ | sh -``` or install Docker using the link below, follow all the steps and most importantly, ensure that there is no previous docker installed while following these instructions.
 2. Install Docker Compose, follow all the steps here and use the recommend example version which is the latest stable release.
 3. Install Git ```sudo apt install git```
 4. Clone the repository for setting up a docker image
